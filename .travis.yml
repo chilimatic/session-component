@@ -1,0 +1,21 @@
+sudo: false
+language: php
+
+cache:
+    directories:
+        - $HOME/.composer/cache
+php:
+  - '7.1'
+# - '7.2'
+
+services:
+  - memcached
+
+
+before_install:
+    - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+    - echo "apc.enable_cli=1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+
+
+install:
+    - travis_retry composer update --no-interaction --prefer-dist
